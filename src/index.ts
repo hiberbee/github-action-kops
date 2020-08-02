@@ -56,19 +56,25 @@ async function download(url: string, destination: string): Promise<string> {
 }
 
 function getArgsFromInput(): string[] {
-  return Object.values(KopsArgs)
-    .filter(key => getInput(key) !== '')
-    .map(key => `--${key}=${getInput(key)}`)
+  return getInput('command')
+    .split(' ')
+    .concat(
+      Object.values(KopsArgs)
+        .filter(key => getInput(key) !== '')
+        .map(key => `--${key}=${getInput(key)}`),
+    )
 }
 
 async function run(args: string[]): Promise<void> {
   exportVariable('KOPS_CLUSTER_NAME', getInput('cluster-name'))
   exportVariable('KOPS_STATE_STORE', getInput('state-store'))
   try {
-    await exec('kops', getInput('command').split(' ').concat(args))
+    await exec('kops', args)
   } catch (error) {
     setFailed(error.message)
   }
 }
 
-download(kopsUrl, `${process.env.HOME}/bin/kops`).then(() => run(getArgsFromInput()))
+download(kopsUrl, `${process.env.HOME}/bin/kops`)
+  .then(() => run(['export', 'kubecfg']))
+  .then(() => run(getArgsFromInput()))

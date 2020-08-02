@@ -1,5 +1,5 @@
 {
-  "name": "github-action-minikube",
+  "name": "github-action-kops",
   "version": "1.0.0",
   "private": true,
   "description": "Start a Kubernetes cluster with Minikube in github actions",
@@ -16,13 +16,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hiberbee/template-github-action-nodejs.git"
+    "url": "git+https://github.com/hiberbee/github-action-kops.git"
   },
   "keywords": [
     "nodejs",
     "typescript",
+    "kubernetes",
     "github-action",
-    "project-template"
+    "kops"
   ],
   "author": {
     "name": "Vlad Volkov",

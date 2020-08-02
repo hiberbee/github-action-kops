@@ -14,8 +14,6 @@ jobs:
       - name: Setup Kops
         uses: hiberbee/github-action-kops@master
         with:
-          command: export kubecfg
-          cluster-name: k8s.hiberbee.net
-          state-store: s3://hiberbee-state-store
-      - name: Validate cluster
-        run: kops validate cluster
+          command: validate cluster
+          cluster-name: $KOPS_CLUSTER_NAME
+          state-store: $KOPS_STATE_STORE

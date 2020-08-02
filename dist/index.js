@@ -1444,9 +1444,11 @@ function download(url, destination) {
     });
 }
 function getArgsFromInput() {
-    return Object.values(KopsArgs)
+    return core_1.getInput('command')
+        .split(' ')
+        .concat(Object.values(KopsArgs)
         .filter(function (key) { return core_1.getInput(key) !== ''; })
-        .map(function (key) { return "--" + key + "=" + core_1.getInput(key); });
+        .map(function (key) { return "--" + key + "=" + core_1.getInput(key); }));
 }
 function run(args) {
     return tslib_1.__awaiter(this, void 0, void 0, function () {
@@ -1459,7 +1461,7 @@ function run(args) {
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);
-                    return [4, exec_1.exec('kops', core_1.getInput('command').split(' ').concat(args))];
+                    return [4, exec_1.exec('kops', args)];
                 case 2:
                     _a.sent();
                     return [3, 4];
@@ -1472,7 +1474,9 @@ function run(args) {
         });
     });
 }
-download(kopsUrl, process.env.HOME + "/bin/kops").then(function () { return run(getArgsFromInput()); });
+download(kopsUrl, process.env.HOME + "/bin/kops")
+    .then(function () { return run(['export', 'kubecfg']); })
+    .then(function () { return run(getArgsFromInput()); });
 //# sourceMappingURL=index.js.map
 
 /***/ }),
