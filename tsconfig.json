@@ -7,29 +7,27 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
-    "lib": [
-      "dom",
-      "ES6"
-    ],
-    "module": "ES6",
-    "moduleResolution": "Node",
     "noEmit": false,
-    "typeRoots": [
-      "node_modules/@types"
-    ],
     "noImplicitAny": true,
     "noImplicitThis": true,
+    "resolveJsonModule": false,
     "sourceMap": true,
     "strict": true,
     "allowSyntheticDefaultImports": true,
     "strictNullChecks": true,
-    "target": "ES6",
-    "removeComments": true
+    "suppressImplicitAnyIndexErrors": true,
+    "removeComments": true,
+    "lib": [
+      "DOM",
+      "ES2015.Iterable",
+      "ES2015.promise",
+      "ES2017",
+      "ES5"
+    ]
   },
   "exclude": [
-    "dist",
     "build",
-    "node_modules"
+    "dist"
   ],
   "include": [
     "src/*"
