@@ -1,0 +1,9 @@
+*.log
+.github
+.idea
+.env*
+.eslintcache
+build
+dist
+node_modules
+package.json
