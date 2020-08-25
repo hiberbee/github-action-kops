@@ -1,5 +1,9 @@
 name: Kops
-on: push
+on:
+  push:
+    paths:
+      - dist/**
+      - .github/workflows/kops.yml
 jobs:
   export-kubeconfig:
     name: Validate cluster

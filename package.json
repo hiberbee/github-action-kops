@@ -2,9 +2,18 @@
   "name": "github-action-kops",
   "version": "1.0.0",
   "private": true,
-  "description": "Start a Kubernetes cluster with Minikube in github actions",
+  "description": "Setup Kops and executes commands as Github Action",
   "main": "build/index.js",
-  "license": "MIT",
+  "readme": "README.md",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/hiberbee/github-action-kops/blob/latest/LICENSE"
+    }
+  ],
+  "engines": {
+    "yarn": ">=1.20"
+  },
   "scripts": {
     "compile": "tsc",
     "clean": "rimraf build",
@@ -66,7 +75,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run release && git add ."
+      "pre-commit": "yarn release && git add ."
     }
   }
 }
