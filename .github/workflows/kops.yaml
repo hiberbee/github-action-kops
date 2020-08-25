@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - index.js
+      - action.yml
       - .github/workflows/kops.yml
 jobs:
   validate:
