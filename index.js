@@ -40,7 +40,7 @@ require('./sourcemap-register.js');module.exports =
 /******/ 	// the startup function
 /******/ 	function startup() {
 /******/ 		// Load entry module and return exports
-/******/ 		return __webpack_require__(362);
+/******/ 		return __webpack_require__(673);
 /******/ 	};
 /******/
 /******/ 	// run startup
@@ -1385,99 +1385,6 @@ module.exports = require("https");
 /***/ (function(module) {
 
 module.exports = require("assert");
-
-/***/ }),
-
-/***/ 362:
-/***/ (function(__unusedmodule, exports, __webpack_require__) {
-
-"use strict";
-
-exports.__esModule = true;
-var tslib_1 = __webpack_require__(422);
-var core_1 = __webpack_require__(470);
-var exec_1 = __webpack_require__(986);
-var io_1 = __webpack_require__(1);
-var tool_cache_1 = __webpack_require__(533);
-var path_1 = tslib_1.__importDefault(__webpack_require__(622));
-var os_1 = tslib_1.__importDefault(__webpack_require__(87));
-var osPlat = os_1["default"].platform();
-var platform = osPlat === 'win32' ? 'windows' : osPlat;
-var suffix = osPlat === 'win32' ? '.exe' : '';
-var kopsVersion = core_1.getInput('kops-version');
-var kopsUrl = "https://github.com/kubernetes/kops/releases/download/v" + kopsVersion + "/kops-" + platform + "-amd64" + suffix;
-var KopsArgs;
-(function (KopsArgs) {
-    KopsArgs["KUBECONFIG"] = "kubeconfig";
-})(KopsArgs || (KopsArgs = {}));
-function download(url, destination) {
-    return tslib_1.__awaiter(this, void 0, void 0, function () {
-        var downloadPath, destinationDir;
-        return tslib_1.__generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4, tool_cache_1.downloadTool(url)];
-                case 1:
-                    downloadPath = _a.sent();
-                    destinationDir = path_1["default"].dirname(destination);
-                    return [4, io_1.mkdirP(destinationDir)];
-                case 2:
-                    _a.sent();
-                    if (!(url.endsWith('tar.gz') || url.endsWith('tar') || url.endsWith('tgz'))) return [3, 5];
-                    return [4, exec_1.exec('tar', ['-xzf', downloadPath, "--strip=1"])];
-                case 3:
-                    _a.sent();
-                    return [4, io_1.mv(path_1["default"].basename(destination), destinationDir)];
-                case 4:
-                    _a.sent();
-                    return [3, 7];
-                case 5: return [4, io_1.mv(downloadPath, destination)];
-                case 6:
-                    _a.sent();
-                    _a.label = 7;
-                case 7: return [4, exec_1.exec('chmod', ['+x', destination])];
-                case 8:
-                    _a.sent();
-                    core_1.addPath(destinationDir);
-                    return [2, downloadPath];
-            }
-        });
-    });
-}
-function getArgsFromInput() {
-    return core_1.getInput('command')
-        .split(' ')
-        .concat(Object.values(KopsArgs)
-        .filter(function (key) { return core_1.getInput(key) !== ''; })
-        .map(function (key) { return "--" + key + "=" + core_1.getInput(key); }));
-}
-function run(args) {
-    return tslib_1.__awaiter(this, void 0, void 0, function () {
-        var error_1;
-        return tslib_1.__generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    core_1.exportVariable('KOPS_CLUSTER_NAME', core_1.getInput('cluster-name'));
-                    core_1.exportVariable('KOPS_STATE_STORE', core_1.getInput('state-store'));
-                    _a.label = 1;
-                case 1:
-                    _a.trys.push([1, 3, , 4]);
-                    return [4, exec_1.exec('kops', args)];
-                case 2:
-                    _a.sent();
-                    return [3, 4];
-                case 3:
-                    error_1 = _a.sent();
-                    core_1.setFailed(error_1.message);
-                    return [3, 4];
-                case 4: return [2];
-            }
-        });
-    });
-}
-download(kopsUrl, process.env.HOME + "/bin/kops")
-    .then(function () { return run(['export', 'kubecfg']); })
-    .then(function () { return run(getArgsFromInput()); });
-//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -5107,6 +5014,68 @@ function isUnixExecutable(stats) {
 
 /***/ }),
 
+/***/ 673:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+exports.__esModule = true;
+var tslib_1 = __webpack_require__(422);
+var core_1 = __webpack_require__(470);
+var exec_1 = __webpack_require__(986);
+var download_1 = __webpack_require__(725);
+var os_1 = tslib_1.__importDefault(__webpack_require__(87));
+var osPlat = os_1["default"].platform();
+var platform = osPlat === 'win32' ? 'windows' : osPlat;
+var suffix = osPlat === 'win32' ? '.exe' : '';
+var kopsVersion = core_1.getInput('kops-version') ? "v" + core_1.getInput('kops-version') : 'latest';
+var kopsUrl = "https://github.com/kubernetes/kops/releases/download/" + kopsVersion + "/kops-" + platform + "-amd64" + suffix;
+var KopsArgs;
+(function (KopsArgs) {
+    KopsArgs["KUBECONFIG"] = "kubeconfig";
+})(KopsArgs || (KopsArgs = {}));
+function getArgsFromInput() {
+    return core_1.getInput('command')
+        .split(' ')
+        .concat(Object.values(KopsArgs)
+        .filter(function (key) { return core_1.getInput(key) !== ''; })
+        .map(function (key) { return "--" + key + "=" + core_1.getInput(key); }));
+}
+function run() {
+    return tslib_1.__awaiter(this, void 0, void 0, function () {
+        var error_1;
+        return tslib_1.__generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    core_1.exportVariable('KOPS_CLUSTER_NAME', core_1.getInput('cluster-name'));
+                    core_1.exportVariable('KOPS_STATE_STORE', core_1.getInput('state-store'));
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 5, , 6]);
+                    return [4, download_1.download(kopsUrl, process.env.HOME + "/bin/kops")];
+                case 2:
+                    _a.sent();
+                    return [4, exec_1.exec('kops', ['export', 'kubecfg'])];
+                case 3:
+                    _a.sent();
+                    return [4, exec_1.exec('kops', getArgsFromInput())];
+                case 4:
+                    _a.sent();
+                    return [3, 6];
+                case 5:
+                    error_1 = _a.sent();
+                    core_1.setFailed(error_1.message);
+                    return [3, 6];
+                case 6: return [2];
+            }
+        });
+    });
+}
+run();
+//# sourceMappingURL=kops.js.map
+
+/***/ }),
+
 /***/ 722:
 /***/ (function(module) {
 
@@ -5136,6 +5105,57 @@ function bytesToUuid(buf, offset) {
 }
 
 module.exports = bytesToUuid;
+
+
+/***/ }),
+
+/***/ 725:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+exports.__esModule = true;
+exports.download = void 0;
+var tslib_1 = __webpack_require__(422);
+var path_1 = tslib_1.__importDefault(__webpack_require__(622));
+var tool_cache_1 = __webpack_require__(533);
+var io_1 = __webpack_require__(1);
+var exec_1 = __webpack_require__(986);
+var core_1 = __webpack_require__(470);
+function download(url, destination) {
+    return tslib_1.__awaiter(this, void 0, void 0, function () {
+        var downloadPath, destinationDir;
+        return tslib_1.__generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4, tool_cache_1.downloadTool(url)];
+                case 1:
+                    downloadPath = _a.sent();
+                    destinationDir = path_1["default"].dirname(destination);
+                    return [4, io_1.mkdirP(destinationDir)];
+                case 2:
+                    _a.sent();
+                    if (!(url.endsWith('tar.gz') || url.endsWith('tar') || url.endsWith('tgz'))) return [3, 5];
+                    return [4, exec_1.exec('tar', ['-xzf', downloadPath, "--strip=1"])];
+                case 3:
+                    _a.sent();
+                    return [4, io_1.mv(path_1["default"].basename(destination), destinationDir)];
+                case 4:
+                    _a.sent();
+                    return [3, 7];
+                case 5: return [4, io_1.mv(downloadPath, destination)];
+                case 6:
+                    _a.sent();
+                    _a.label = 7;
+                case 7: return [4, exec_1.exec('chmod', ['+x', destination])];
+                case 8:
+                    _a.sent();
+                    core_1.addPath(destinationDir);
+                    return [2, downloadPath];
+            }
+        });
+    });
+}
+exports.download = download;
 
 
 /***/ }),
