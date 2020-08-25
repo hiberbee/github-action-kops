@@ -9,10 +9,10 @@
     "compile": "tsc",
     "clean": "rimraf build",
     "lint": "eslint --fix src/**/*.ts",
-    "build": "ncc build build/index.js",
+    "build": "ncc build build/index.js --source-map",
     "test": "jest",
     "start": "cross-env RUNNER_TEMP=build node dist/index.js",
-    "release": "npm run lint && npm run compile && npm run build && npm run clean"
+    "release": "yarn clean && yarn compile && yarn lint && yarn build && yarn clean"
   },
   "repository": {
     "type": "git",
@@ -31,31 +31,31 @@
     "url": "https://github.com/vladyslavvolkov"
   },
   "dependencies": {
-    "@actions/github": "^4.0.0",
     "@actions/core": "^1.2.4",
     "@actions/exec": "^1.0.4",
+    "@actions/github": "^4.0.0",
     "@actions/http-client": "^1.0.8",
     "@actions/tool-cache": "^1.6.0"
   },
   "devDependencies": {
-    "@types/jest": "26.0.8",
-    "@types/node": "14.0.27",
-    "@typescript-eslint/eslint-plugin": "3.7.1",
-    "@typescript-eslint/parser": "^3.7.1",
+    "@types/jest": "^26.0.10",
+    "@types/node": "^14.6.0",
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "@typescript-eslint/parser": "^3.10.1",
     "@zeit/ncc": "^0.22.3",
     "cross-env": "^7.0.2",
-    "eslint": "7.6.0",
+    "eslint": "^7.7.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-github": "^4.1.1",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jest": "^23.20.0",
     "eslint-plugin-prettier": "^3.1.4",
     "husky": "^4.2.5",
-    "jest": "^26.2.2",
-    "prettier": "^2.0.5",
+    "jest": "^26.4.2",
+    "prettier": "^2.1.0",
     "rimraf": "^3.0.2",
-    "ts-jest": "^26.1.4",
-    "typescript": "^3.9.7"
+    "ts-jest": "^26.2.0",
+    "typescript": "^4.0.2"
   },
   "jest": {
     "transform": {

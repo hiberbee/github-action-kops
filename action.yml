@@ -6,15 +6,15 @@ branding:
   color: blue
 inputs:
   kops-version:
-    default: 1.17.1
-    description: Set Skaffold version
+    default: 1.18.0
+    description: Set Kops version
     required: false
   kubeconfig:
     default: ''
     description: Kubernetes cluster configuration file
     required: false
   command:
-    description: Skaffold command to execute
+    description: Kops command to execute
     required: true
   state-store:
     description: Kops state store
