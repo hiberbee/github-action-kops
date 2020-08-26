@@ -1,4 +1,4 @@
-name: Kops
+name: Kops CI
 on:
   push:
     paths:
