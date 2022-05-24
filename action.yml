@@ -6,7 +6,7 @@ branding:
   color: blue
 inputs:
   kops-version:
-    default: 1.23.0
+    default: 1.23.2
     description: Set Kops version
     required: false
   kubeconfig:
